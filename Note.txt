@@ -1,0 +1,174 @@
+Jest Official Link:
+https://jestjs.io/
+https://jestjs.io/docs/getting-started
+
+JEST Tutorial:
+https://www.youtube.com/watch?v=IPiUDhwnZxA
+
+JEST Tutorial Playlist
+https://www.youtube.com/playlist?list=PL8p2I9GklV44-_4hh1evohe5WinvqrWr6
+
+=================================
+CMD
+npm install --save-dev jest
+
+
+=================================
+Jest ignore/exclude
+You can add this config to jest.config.js or package.json > jest
+
+...
+"jest": {
+    "collectCoverage": true,
+    "testPathIgnorePatterns" : [
+      "__tests__/properties.js",
+      "__tests__/properties.js.sample"
+    ]
+},
+...
+
+To exclude an entire folder, add the following in the "jest" property of the package.json file:
+
+"modulePathIgnorePatterns": [
+  "<rootDir>/src/services"
+],
+
+To exclude an individual file:
+"collectCoverageFrom": [
+  "!src/index.js"
+],
+
+
+"jest": {
+    "testPathIgnorePatterns": ["wallet-svc/src/db/"],
+    "coveragePathIgnorePatterns": ["wallet-svc/src/db/"],
+    "modulePathIgnorePatterns": ["wallet-svc/src/db/"],
+    "moduleFileExtensions": [
+        "js",
+        "json",
+        "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+        "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+        "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+}
+
+
+"jest": {
+    "collectCoverageFrom": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "!<rootDir>/src/registerServiceWorker.js",
+        "!<rootDir>/src/serviceWorker.js",
+        "!<rootDir>/node_modules/"
+    ]
+},
+
+
+"jest": {
+    "collectCoverageFrom": [
+      "!<rootDir>/src/reportWebVitals.js",
+      "!<rootDir>/src/index.js"
+    ],
+  }
+
+
+
+https://jestjs.io/docs/configuration
+########################################################
+
+Configuring Jest
+The Jest philosophy is to work great by default, but sometimes you just need more configuration power.
+
+It is recommended to define the configuration in a dedicated JavaScript, TypeScript or JSON file. The file will be discovered automatically, if it is named jest.config.js|ts|mjs|cjs|json. You can use --config flag to pass an explicit path to the file.
+
+NOTE:
+Keep in mind that the resulting configuration object must always be JSON-serializable.
+
+The configuration file should simply export an object:
+
+#JavaScript:
+/** @type {import('jest').Config} */
+const config = {
+  verbose: true,
+};
+
+module.exports = config;
+
+#TypeScript:
+import type {Config} from 'jest';
+
+const config: Config = {
+  verbose: true,
+};
+
+export default config;
+
+Or a function returning an object:
+
+#JavaScript:
+/** @returns {Promise<import('jest').Config>} */
+module.exports = async () => {
+  return {
+    verbose: true,
+  };
+};
+
+#TypeScript:
+import type {Config} from 'jest';
+
+export default async (): Promise<Config> => {
+  return {
+    verbose: true,
+  };
+};
+
+TIP:
+To read TypeScript configuration files Jest requires ts-node. Make sure it is installed in your project.
+
+The configuration also can be stored in a JSON file as a plain object:
+
+#File: jest.config.json
+{
+  "bail": 1,
+  "verbose": true
+}
+
+Alternatively Jest's configuration can be defined through the "jest" key in the package.json of your project:
+#File: package.json
+{
+  "name": "my-project",
+  "jest": {
+    "verbose": true
+  }
+}
+
+Options
+INFO
+You can retrieve Jest's defaults from jest-config to extend them if needed:
+
+#JavaScript:
+const {defaults} = require('jest-config');
+
+/** @type {import('jest').Config} */
+const config = {
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts', 'cts'],
+};
+
+module.exports = config;
+
+#TypeScript:
+import type {Config} from 'jest';
+import {defaults} from 'jest-config';
+
+const config: Config = {
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
+};
+
+export default config;
