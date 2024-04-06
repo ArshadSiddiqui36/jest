@@ -95,6 +95,3 @@ test('spying on a method of an object', () => {
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
 });
-
-
-(() => console.log("Self Called"))();
